@@ -32,14 +32,52 @@ public class CRPort {
         this.isUsed = isUsed;
     }
 
+    /**
+     * Port ID Getter.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     * @return int, port ID.
+     */
     public int getID () { return ID; }
 
+    /**
+     * TCP Port Getter.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     * @return int, TCP Port.
+     */
     public int getTCPPort () { return TCPPort; }
 
+    /**
+     * Port Used Status Getter.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     * @return boolean, if port is used or not.
+     */
     public boolean isUsed () { return isUsed; }
 
+    /**
+     * TCP Port Setter.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     */
     public void setTCPPort (int TCPPort) { this.TCPPort = TCPPort; }
 
+    /**
+     * TCP Used Status Setter.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     */
     public void setUsed (boolean used) { this.isUsed = used; }
 
     @Override

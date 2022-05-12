@@ -27,39 +27,31 @@ public class CRServer {
     public CRPort port;
 
     /**
-     * For the Map, if it has
-     * a seed or not.
+     * Map of the Lobby game.
      */
-    private String hasSeed = "";
+    private Map map;
 
     /**
-     * Map of the Lobby.
+     * Map's seed.
      */
-    static Map map;
+    private String seed;
 
     /**
-     * CRServer Constructor.
+     * CRServer Constructor(s).
      *
      * Initializes the Server and creates the map.
      * with or without a seed
      */
-    public CRServer(){
+    public CRServer(Map map){
         this.server = new Server();
-
-        if(hasSeed.isEmpty()){ map = new Map(); }
-        else{ map = new Map(hasSeed); }
+        this.map = map;
+        this.seed = map.seed;
     }
 
-    /**
-     * Sets the seed of the map.
-     *
-     * @param seed seed of the map.
-     * @author Marco Marrelli
-     * @since 11/05/2022
-     * @version 0.1.0
-     */
-    public void setSeed(String seed){
-        hasSeed = seed;
+    public CRServer(){
+        this.server = new Server();
+        this.map = new Map();
+        this.seed = map.seed;
     }
 
     /**
@@ -92,4 +84,14 @@ public class CRServer {
      * @version 0.1.0
      */
     public void close(){ this.server.close(); }
+
+    public void listen(){
+        this.server.addListener(new Listener() {
+            public void received (Connection connection, Object object) {
+                if (object instanceof String) {
+
+                }
+            }
+        });
+    }
 }

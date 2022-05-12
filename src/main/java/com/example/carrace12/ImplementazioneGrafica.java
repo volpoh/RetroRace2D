@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.awt.color.ICC_Profile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,39 +40,109 @@ import map.Map;
  * @since 02/05/2022
  */
 
-//allora, to-do list di oggi:
+//allora, to-do list:
 /*
     - rendere più facile la creazione della mappa
     - renderla una funzione
     - migliorare il movimento della macchina
     - rendere fixed lo schermo, non permettendo di visionare lo spazio bianco
     - rimpicciolire la macchina perché ora come ora è troppo grande
-
-
- * ho aggiornato (messo anche su giT) la mappa con anche al funzione lenght che ho visto che volpo voleva
- tipo getLength()? si per ora ho fatto una cosa bruttissima che funziona, ma non è molto elegante
-
- ma che cazzo???? copilot mi consiglia pure le frasi in italiano [faccina dello scheletro]
  */
-
-
-
 
 public class ImplementazioneGrafica extends Application{
     int newY, newX;
     int cameraX, cameraY;
     int incremento = 5;
 
-    Map map = new Map("99999");
+    /**
+     * Map of the game.
+     */
+    Map map;
 
-    final int MAP_WIDTH = 256;
-    final int MAP_HEIGHT = 256*map.length();
+    /**
+     * Set containing the keys pressed.
+     */
+    Set<KeyCode> pressedKeys;
 
-    Set<KeyCode> pressedKeys = new HashSet<>();
+    /**
+     * Map Width.
+     */
+    int MAP_WIDTH;
+
+    /**
+     * Map Height.
+     */
+    int MAP_HEIGHT;
+
+    /**
+     * Initializes the GUI.
+     *
+     * @author Marco Marrelli
+     * @version 0.3.0
+     * @since 12/05/2022
+     * @param map, the map to be displayed
+     */
+    public void init(Map map) {
+        this.map = map;
+        this.pressedKeys = new HashSet<>();
+
+        this.MAP_WIDTH = Chunk.CHUNK_WIDTH;
+        this.MAP_HEIGHT = Chunk.CHUNK_WIDTH*map.length();
+    }
+
+    /**
+     * Generates the graphic map and layout map.
+     *
+     * @author Marco Marrelli
+     * @since 10/05/2022
+     * @version 0.3.0
+     * @return boolean, true if the map is generated, false otherwise.
+     * @throws IOException
+     */
+    public boolean generateMap() throws IOException {
+        List<String> chunkList = map.getChunksNames();
+
+        if(chunkList == null){ return false; }
+
+        int nimx = 0, nimy = 0;
+        BufferedImage showedResult = new BufferedImage(MAP_WIDTH, MAP_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        BufferedImage layoutResult = new BufferedImage(MAP_WIDTH, MAP_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        Graphics showedG = showedResult.getGraphics();
+        Graphics layoutG = layoutResult.getGraphics();
+
+        for (String image : chunkList) {
+            String showedPath = "src/main/resources/ChunkShowed/" + image + ".png";
+            String layoutPath = "src/main/resources/ChunkLayouts/" + image + ".png";
+            BufferedImage showedBI = ImageIO.read(new File(showedPath));
+            BufferedImage layoutBI = ImageIO.read(new File(layoutPath));
+
+            if(showedBI == null || layoutBI == null){ return false; }
+
+            showedG.drawImage(showedBI, nimx, nimy, null);
+            layoutG.drawImage(layoutBI, nimx, nimy, null);
+
+            nimy += MAP_WIDTH;
+            if (nimy > showedResult.getHeight() || nimy > layoutResult.getHeight()) {
+                nimy = 0;
+                nimx += MAP_WIDTH;
+            }
+        }
+
+        boolean checkShowedMap = ImageIO.write(showedResult, "png", new File("src/main/resources/map.png"));
+        boolean checkLayoutMap = ImageIO.write(layoutResult, "png", new File("src/main/resources/mapLayout.png"));
+
+        if(checkShowedMap && checkLayoutMap){
+            Collections.reverse(chunkList);
+            System.out.println(chunkList);
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
-
+        init(new Map());
         generateMap();
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
 
@@ -176,51 +247,7 @@ public class ImplementazioneGrafica extends Application{
         stage.show();
     }
 
-    public boolean generateMap() throws IOException {
-        List<String> chunkList = new ArrayList<>();
-        for (Chunk c : map) {
-            String dummy = "" + c.getId() + "_" + c.getStart().toString().substring(0, 1).toLowerCase() + c.getEnd().toString().substring(0, 1).toLowerCase() + ".png";
-            chunkList.add(dummy);
-        }
-        Collections.reverse(chunkList);
-
-        if(chunkList == null){ return false; }
-
-        int nimx = 0, nimy = 0;
-        BufferedImage showedResult = new BufferedImage(MAP_WIDTH, MAP_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        BufferedImage layoutResult = new BufferedImage(MAP_WIDTH, MAP_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        Graphics showedG = showedResult.getGraphics();
-        Graphics layoutG = layoutResult.getGraphics();
-
-        for (String image : chunkList) {
-            String showedPath = "src/main/resources/ChunkShowed/" + image;
-            String layoutPath = "src/main/resources/ChunkLayouts/" + image;
-            BufferedImage showedBI = ImageIO.read(new File(showedPath));
-            BufferedImage layoutBI = ImageIO.read(new File(layoutPath));
-
-            if(showedBI == null || layoutBI == null){ return false; }
-
-            showedG.drawImage(showedBI, nimx, nimy, null);
-            layoutG.drawImage(layoutBI, nimx, nimy, null);
-
-            nimy += MAP_WIDTH;
-            if (nimy > showedResult.getHeight() || nimy > layoutResult.getHeight()) {
-                nimy = 0;
-                nimx += MAP_WIDTH;
-            }
-        }
-
-        boolean checkShowedMap = ImageIO.write(showedResult, "png", new File("src/main/resources/map.png"));
-        boolean checkLayoutMap = ImageIO.write(layoutResult, "png", new File("src/main/resources/mapLayout.png"));
-
-        if(checkShowedMap && checkLayoutMap){ return true; }
-
-        return false;
-    }
-
-
     public static void main(String[] args) {
-        System.out.println(Map.generateSeed());
         launch();
     }
 }

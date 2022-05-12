@@ -23,6 +23,8 @@ public class Chunk {
 	protected final Way start;
 	protected final Way end;
 
+	public static final int CHUNK_WIDTH = 256;
+
 	/**
 	 * @param id the id of the chunk
 	 * @param start the start way of the chunk
@@ -48,7 +50,7 @@ public class Chunk {
 
 	/**
 	 * example of a chunk name "<id>_<start><end>" --> 1_lr --> id = 1, start = left, end = right
-	 * @return the list of chunk names
+	 * @return the list of all chunks names
 	 */
 	public static String @NotNull [] getChunksName () {
 		Gson gson = new Gson ();

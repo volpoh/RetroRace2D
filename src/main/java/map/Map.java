@@ -45,7 +45,7 @@ public class Map implements Iterable<Chunk> {
     /**
      * The seed that generate this map.
      */
-    protected final String seed;
+    public final String seed;
 
     /**
      * If the Map was generater from an user seed
@@ -144,6 +144,25 @@ public class Map implements Iterable<Chunk> {
         }
 
         return map;
+    }
+
+    /**
+     * Returns the chunk name list of the map.
+     *
+     * @version 0.2.0
+     * @author Marco Marrelli
+     * @see Chunk
+     * @return String List, containing the chunks of the map names.
+     */
+    public List<String> getChunksNames() {
+        List<String> chunkList = new ArrayList<>();
+        for (Chunk c : map) {
+            String dummy = "" + c.getId() + "_" + c.getStart().toString().substring(0, 1).toLowerCase() + c.getEnd().toString().substring(0, 1).toLowerCase();
+            chunkList.add(dummy);
+        }
+        Collections.reverse(chunkList);
+
+        return chunkList;
     }
 
     /**
