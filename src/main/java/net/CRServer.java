@@ -36,6 +36,8 @@ public class CRServer {
      */
     private String seed;
 
+    public boolean isUsed;
+
     /**
      * CRServer Constructor(s).
      *
@@ -52,6 +54,7 @@ public class CRServer {
         this.server = new Server();
         this.map = new Map();
         this.seed = map.seed;
+        this.isUsed = false;
     }
 
     /**
@@ -72,23 +75,46 @@ public class CRServer {
      *
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.1.0
+     * @version 0.2.0
      */
-    public void start() { this.server.start(); }
+    public void start() {
+        this.server.start();
+        this.isUsed = true;
+    }
 
     /**
      * Closes the server.
      *
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.1.0
+     * @version 0.2.0
      */
-    public void close(){ this.server.close(); }
+    public void close(){
+        this.server.close();
+        this.isUsed = false;
+    }
 
-    public void listen(){
+    /**
+     * Getter of the isUsed status.
+     *
+     * @author Marco Marrelli
+     * @since 12/05/2022
+     * @version 0.1.0
+     * @return boolean, if it's used or not.
+     */
+    public boolean isServerUsed(){ return this.isUsed; }
+
+    /**
+     * Add the listener to the current Server
+     *
+     * @author Marco Marrelli
+     * @since 12/05/2022
+     * @version 0.0.1
+     */
+    public void addListenerToServer(){
         this.server.addListener(new Listener() {
             public void received (Connection connection, Object object) {
-                if (object instanceof String) {
+                if (object instanceof CRRequest) {
 
                 }
             }

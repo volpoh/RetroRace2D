@@ -1,5 +1,12 @@
 package net;
 
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
+
+import java.io.IOException;
+
 /**
  * tHE client for the CRServer.
  *
@@ -11,5 +18,71 @@ package net;
  * @see CRPort
  */
 public class CRClient {
+    /**
+     * Client (Kryonet).
+     */
+    private Client client;
 
+    /**
+     * Port of the Server to connect to.
+     */
+    public CRPort port;
+
+    /**
+     * TimeOut of Connection
+     */
+    final public int TIMEOUT = 5000;
+
+    public CRClient(){
+        this.client = new Client();
+    }
+
+    /**
+     * Connects the client to the port of the server.
+     *
+     * @param host IP of the server (e.g. localhost).
+     * @param port port to connect the client to.
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     */
+    public void connect(String host, CRPort port) throws IOException {
+        this.client.connect(TIMEOUT, host, port.TCPPort);
+        this.port = port;
+    }
+
+    /**
+     * Starts the client.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     */
+    public void start() { this.client.start(); }
+
+    /**
+     * Closes the client.
+     *
+     * @author Marco Marrelli
+     * @since 11/05/2022
+     * @version 0.1.0
+     */
+    public void close(){ this.client.close(); }
+
+    /**
+     * Add the listener to the current Client
+     *
+     * @author Marco Marrelli
+     * @since 12/05/2022
+     * @version 0.0.1
+     */
+    public void addListenerToClient(){
+        this.client.addListener(new Listener() {
+            public void received (Connection connection, Object object) {
+                if (object instanceof CRResponse) {
+
+                }
+            }
+        });
+    }
 }

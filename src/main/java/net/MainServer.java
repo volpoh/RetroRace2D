@@ -121,35 +121,16 @@ public class MainServer {
      * @return CRPort[]
      */
     public static boolean isPortFree (int port) {
-        Server s = new Server ();
-        try{ s.bind(port); }
-        catch (IOException e) { return false; }
+        Server s = new Server();
+        try {
+            s.bind(port);
+        } catch (IOException e) {
+            return false;
+        }
 
         s.close();
         return true;
     }
-
-
-
-    // TO DO:
-
-    /**
-     * Update status of ports isUsed.
-     *
-     * @author Marco Marrelli
-     * @since 11/05/2022
-     * @version 0.3.0
-     * @return CRPort[]
-    */
-    /*
-    public void updateStatus(){
-        for(CRServer server : LOBBYLIST){
-
-        }
-    }
-    */
-
-
 
     public static void main (String[] args) throws IOException {
         new MainServer();
