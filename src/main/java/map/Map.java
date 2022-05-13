@@ -21,16 +21,16 @@ public class Map implements Iterable<Chunk> {
     /**
      * The number of digits of the seed.
      */
-    public static final int SEED_LENGTH = 5;
+    private static final int SEED_LENGTH = 5;
 
     /**
      * Minimal number of chunks in the map.
      */
-    public static final int MIN_MAP_LENGTH = 10;
+    private static final int MIN_MAP_LENGTH = 10;
     /**
      * Maximal number of chunks in the map.
      */
-    public static final int MAX_MAP_LENGTH = 12;
+    private static final int MAX_MAP_LENGTH = 12;
 
     /**
      * List of the all chunks.

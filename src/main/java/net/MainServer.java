@@ -1,5 +1,6 @@
 package net;
 
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Server;
 
 import java.util.LinkedList;
@@ -44,6 +45,7 @@ public class MainServer {
      *
      * @version 0.1.0
      */
+
     public MainServer () {
         this.PORTS = initPorts ();
         this.LOBBYLIST = initServers();
@@ -122,11 +124,8 @@ public class MainServer {
      */
     public static boolean isPortFree (int port) {
         Server s = new Server();
-        try {
-            s.bind(port);
-        } catch (IOException e) {
-            return false;
-        }
+        try { s.bind(port); }
+        catch (IOException e) { return false; }
 
         s.close();
         return true;
@@ -135,10 +134,12 @@ public class MainServer {
     public static void main (String[] args) throws IOException {
         new MainServer();
 
+        CRClient[] clients = new CRClient[MAX_LOBBY];
+
         for (CRPort port : PORTS){
-            LOBBYLIST[port.ID] = new CRServer();
-            LOBBYLIST[port.ID].start();
-            LOBBYLIST[port.ID].bind(port);
+            LOBBYLIST[port.ID] = new CRServer(port);
+            clients[port.ID] = new CRClient("localhost", port);
+            clients[port.ID].send("Miao" + port.ID);
         }
     }
 }

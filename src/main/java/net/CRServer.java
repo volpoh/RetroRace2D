@@ -1,6 +1,9 @@
 package net;
 
 import com.esotericsoftware.kryonet.*;
+import com.esotericsoftware.kryo.Kryo;
+
+import com.example.carrace12.ImplementazioneGrafica;
 import map.Map;
 
 import java.io.IOException;
@@ -44,17 +47,26 @@ public class CRServer {
      * Initializes the Server and creates the map.
      * with or without a seed
      */
-    public CRServer(Map map){
+    public CRServer(Map map, CRPort port) throws IOException {
         this.server = new Server();
+        this.bind(port);
+        this.start();
+        //this.addListenerToServer();
+
         this.map = map;
         this.seed = map.seed;
     }
 
-    public CRServer(){
+    public CRServer(CRPort port) throws IOException {
         this.server = new Server();
+        this.start();
+        this.addListenerToServer();
+
         this.map = new Map();
         this.seed = map.seed;
         this.isUsed = false;
+
+        this.bind(port);
     }
 
     /**
@@ -114,9 +126,13 @@ public class CRServer {
     public void addListenerToServer(){
         this.server.addListener(new Listener() {
             public void received (Connection connection, Object object) {
-                if (object instanceof CRRequest) {
+                /* IT WORKS, BUT ONLY FOR ONE CLIENT
+                ImplementazioneGrafica GUI = new ImplementazioneGrafica();
+                GUI.init(new Map());
+                GUI.main(null);
+                */
 
-                }
+                System.out.println("Received: " + object.toString());
             }
         });
     }

@@ -1,9 +1,9 @@
 package net;
 
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
@@ -33,8 +33,13 @@ public class CRClient {
      */
     final public int TIMEOUT = 5000;
 
-    public CRClient(){
+    public CRClient(String host, CRPort port) throws IOException {
         this.client = new Client();
+        this.start();
+        this.addListenerToClient();
+        this.connect(host, port);
+
+        this.port = port;
     }
 
     /**
@@ -70,6 +75,16 @@ public class CRClient {
     public void close(){ this.client.close(); }
 
     /**
+     * Send TCP Packet to Server (e.g. CRRequest).
+     *
+     * @author Marco Marrelli
+     * @param obj object to send (e.g. CRRequest).
+     * @since 13/05/2022
+     * @version 0.1.0
+     */
+    public void send(Object obj){ this.client.sendTCP(obj); }
+
+    /**
      * Add the listener to the current Client
      *
      * @author Marco Marrelli
@@ -79,9 +94,7 @@ public class CRClient {
     public void addListenerToClient(){
         this.client.addListener(new Listener() {
             public void received (Connection connection, Object object) {
-                if (object instanceof CRResponse) {
 
-                }
             }
         });
     }

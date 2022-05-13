@@ -9,6 +9,7 @@ module com.example.carrace12 {
     requires com.google.gson;
     requires java.desktop;
     requires kryonet;
+    requires kryo;
 
     opens com.example.carrace12 to javafx.fxml;
     exports com.example.carrace12;
