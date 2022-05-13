@@ -7,3 +7,6 @@ JavaFX Race Game in 2D
 ### Creators
 * [@volpoh](https://github.com/volpoh)
 * [@freskies](https://github.com/Freskies)
+* [@RiccardoBenzoni](https://github.com/RiccardoBenzoni)
+* [@Contactu01](https://github.com/Contactu01)
+
