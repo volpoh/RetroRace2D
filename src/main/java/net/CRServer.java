@@ -54,21 +54,23 @@ public class CRServer {
         this.server = new Server();
         this.bind(port);
         this.start();
-        this.addListenerToServer(this.map);
 
         this.map = map;
         this.seed = map.seed;
+
+        this.addListenerToServer(map);
     }
 
     public CRServer(CRPort port) throws IOException {
         this.server = new Server();
         this.bind(port);
         this.start();
-        this.addListenerToServer(this.map);
 
         this.map = new Map();
         this.seed = map.seed;
         this.isUsed = false;
+
+        this.addListenerToServer(this.map);
     }
 
     /**
@@ -77,7 +79,6 @@ public class CRServer {
      * @param port port to bind the server to.
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.2.0
      */
     public void bind(CRPort port) throws IOException {
         this.server.bind(port.TCPPort);
@@ -89,7 +90,6 @@ public class CRServer {
      *
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.2.0
      */
     public void start() {
         this.server.start();
@@ -101,7 +101,6 @@ public class CRServer {
      *
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.2.0
      */
     public void close(){
         this.server.close();
@@ -111,31 +110,26 @@ public class CRServer {
     /**
      * Getter of the isUsed status.
      *
+     * @return boolean, if it's used or not.
      * @author Marco Marrelli
      * @since 12/05/2022
-     * @version 0.1.0
-     * @return boolean, if it's used or not.
      */
     public boolean isServerUsed(){ return this.isUsed; }
 
     /**
      * Add the listener to the current Server
      *
+     * @throws java.lang.IllegalStateException if the server tries to launch more than one application
      * @author Marco Marrelli
      * @since 12/05/2022
-     * @version 0.0.1
-     * @throws java.lang.IllegalStateException if the server tries to launch more than one application
      */
     public void addListenerToServer(Map map){
         this.server.addListener(new Listener() {
-
-            public void received (Connection connection, Object object){
-                ImplementazioneGrafica GUI = new ImplementazioneGrafica();
-                GUI.init(map);
-                GUI.main(null);
-
-                if(object instanceof CRRequest) {
-                    CRRequest request = (CRRequest) object;
+            public void received(Connection connection, Object object) {
+                if (object instanceof CRRequest request) {
+                    ImplementazioneGrafica GUI = new ImplementazioneGrafica();
+                    GUI.init(map);
+                    ImplementazioneGrafica.main(null);
                 }
             }
         });
