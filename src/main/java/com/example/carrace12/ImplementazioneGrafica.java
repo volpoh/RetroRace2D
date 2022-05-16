@@ -247,7 +247,7 @@ public class ImplementazioneGrafica extends Application{
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws java.lang.IllegalStateException{
         launch();
     }
 }

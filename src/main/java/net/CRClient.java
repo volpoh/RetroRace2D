@@ -94,7 +94,9 @@ public class CRClient {
     public void addListenerToClient(){
         this.client.addListener(new Listener() {
             public void received (Connection connection, Object object) {
-
+                if (object instanceof CRResponse) {
+                    CRResponse response = (CRResponse) object;
+                }
             }
         });
     }

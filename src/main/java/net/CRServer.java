@@ -32,13 +32,16 @@ public class CRServer {
     /**
      * Map of the Lobby game.
      */
-    private Map map;
+    public Map map;
 
     /**
      * Map's seed.
      */
     private String seed;
 
+    /**
+     * If the Server is running.
+     */
     public boolean isUsed;
 
     /**
@@ -51,7 +54,7 @@ public class CRServer {
         this.server = new Server();
         this.bind(port);
         this.start();
-        //this.addListenerToServer();
+        this.addListenerToServer(this.map);
 
         this.map = map;
         this.seed = map.seed;
@@ -59,14 +62,13 @@ public class CRServer {
 
     public CRServer(CRPort port) throws IOException {
         this.server = new Server();
+        this.bind(port);
         this.start();
-        this.addListenerToServer();
+        this.addListenerToServer(this.map);
 
         this.map = new Map();
         this.seed = map.seed;
         this.isUsed = false;
-
-        this.bind(port);
     }
 
     /**
@@ -122,17 +124,19 @@ public class CRServer {
      * @author Marco Marrelli
      * @since 12/05/2022
      * @version 0.0.1
+     * @throws java.lang.IllegalStateException if the server tries to launch more than one application
      */
-    public void addListenerToServer(){
+    public void addListenerToServer(Map map){
         this.server.addListener(new Listener() {
-            public void received (Connection connection, Object object) {
-                /* IT WORKS, BUT ONLY FOR ONE CLIENT
-                ImplementazioneGrafica GUI = new ImplementazioneGrafica();
-                GUI.init(new Map());
-                GUI.main(null);
-                */
 
-                System.out.println("Received: " + object.toString());
+            public void received (Connection connection, Object object){
+                ImplementazioneGrafica GUI = new ImplementazioneGrafica();
+                GUI.init(map);
+                GUI.main(null);
+
+                if(object instanceof CRRequest) {
+                    CRRequest request = (CRRequest) object;
+                }
             }
         });
     }
