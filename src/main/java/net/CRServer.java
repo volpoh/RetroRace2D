@@ -1,7 +1,7 @@
 package net;
 
-import com.esotericsoftware.kryonet.*;
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.*;
 
 import com.example.carrace12.ImplementazioneGrafica;
 import map.Map;
@@ -12,17 +12,17 @@ import java.io.IOException;
  * Car Race Lobby Server class.
  *
  * @author Marco Marrelli
- * @since 11/05/2022
  * @version 0.1.0
  * @see Server
  * @see CRPort
+ * @since 11/05/2022
  */
 public class CRServer {
 
     /**
      * Server (Kryonet).
      */
-    private Server server;
+    private final Server server;
 
     /**
      * Port of the Server.
@@ -37,7 +37,7 @@ public class CRServer {
     /**
      * Map's seed.
      */
-    private String seed;
+    private final String seed;
 
     /**
      * If the Server is running.
@@ -46,7 +46,7 @@ public class CRServer {
 
     /**
      * CRServer Constructor(s).
-     *
+     * <p>
      * Initializes the Server and creates the map.
      * with or without a seed
      */
@@ -102,7 +102,7 @@ public class CRServer {
      * @author Marco Marrelli
      * @since 11/05/2022
      */
-    public void close(){
+    public void close() {
         this.server.close();
         this.isUsed = false;
     }
@@ -114,7 +114,9 @@ public class CRServer {
      * @author Marco Marrelli
      * @since 12/05/2022
      */
-    public boolean isServerUsed(){ return this.isUsed; }
+    public boolean isServerUsed() {
+        return this.isUsed;
+    }
 
     /**
      * Add the listener to the current Server
@@ -123,7 +125,7 @@ public class CRServer {
      * @author Marco Marrelli
      * @since 12/05/2022
      */
-    public void addListenerToServer(Map map){
+    public void addListenerToServer(Map map) {
         this.server.addListener(new Listener() {
             public void received(Connection connection, Object object) {
                 if (object instanceof CRRequest request) {

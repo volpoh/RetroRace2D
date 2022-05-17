@@ -1,28 +1,26 @@
 package net;
 
-import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Server;
-
-import java.util.LinkedList;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Server containing all Lobbies class.
  *
  * @author Marco Marrelli
- * @since 11/05/2022
  * @version 0.3.0
  * @see CRServer
  * @see CRPort
+ * @since 11/05/2022
  */
 public class MainServer {
     /**
      * Lobby Server List.
      */
-    protected static CRServer[] LOBBYLIST;
+    protected static CRServer[] LOBBY_LIST;
 
     /**
      * Port List.
@@ -42,96 +40,93 @@ public class MainServer {
     /**
      * MainServer Constructor.
      * Initialize PORTS and LOBBYLIST.
-     *
-     * @version 0.1.0
      */
 
-    public MainServer () {
-        this.PORTS = initPorts ();
-        this.LOBBYLIST = initServers();
+    public MainServer() {
+        MainServer.PORTS = initPorts();
+        MainServer.LOBBY_LIST = initServers();
     }
 
     /**
      * Initialize PORTS.
      *
+     * @return CRPort[]
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.2.0
-     * @return CRPort[]
      */
-    public static CRPort @NotNull [] initPorts () {
-        List<CRPort> portsList = new LinkedList<> ();
+    public static CRPort @NotNull [] initPorts() {
+        List<CRPort> portsList = new LinkedList<>();
 
-        for (int i = STARTING_PORT; i < STARTING_PORT + MAX_LOBBY; i ++)
-            portsList.add(new CRPort (i - STARTING_PORT, i,false));
+        for (int i = STARTING_PORT; i < STARTING_PORT + MAX_LOBBY; i++)
+            portsList.add(new CRPort(i - STARTING_PORT, i, false));
 
-        return portsList.toArray (new CRPort[0]);
+        return portsList.toArray(new CRPort[0]);
     }
 
     /**
      * Initialize LOBBYLIST.
      *
+     * @return CRServer[]
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.4.0
-     * @return CRServer[]
      */
-    public static CRServer @NotNull [] initServers () {
-        List<CRServer> serversList = new LinkedList<> ();
+    public static CRServer @NotNull [] initServers() {
+        List<CRServer> serversList = new LinkedList<>();
 
-        for (int i = 0; i < MAX_LOBBY; i ++)
+        for (int i = 0; i < MAX_LOBBY; i++)
             serversList.add(null);
 
-        return serversList.toArray (new CRServer[0]);
+        return serversList.toArray(new CRServer[0]);
     }
 
     /**
      * Returns ports list.
      *
+     * @return CRPort[]
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.1.0
-     * @return CRPort[]
      */
-    public static CRPort @NotNull [] getPorts () {
+    public static CRPort @NotNull [] getPorts() {
         return PORTS;
     }
 
     /**
      * Returns free ports list.
      *
+     * @return CRPort[]
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.2.0
-     * @return CRPort[]
      */
-    public static CRPort @NotNull [] getFreePorts () {
-        List<CRPort> freePortsList = new LinkedList<> ();
+    public static CRPort @NotNull [] getFreePorts() {
+        List<CRPort> freePortsList = new LinkedList<>();
 
-        for(CRPort port : PORTS)
-            if(isPortFree(port.TCPPort)) freePortsList.add(port);
+        for (CRPort port : PORTS)
+            if (isPortFree(port.TCPPort))
+                freePortsList.add(port);
 
-        return freePortsList.toArray (new CRPort[0]);
+        return freePortsList.toArray(new CRPort[0]);
     }
 
     /**
      * Returns if a port is free or not.
      *
+     * @return CRPort[]
      * @author Marco Marrelli
      * @since 11/05/2022
-     * @version 0.1.0
-     * @return CRPort[]
      */
-    public static boolean isPortFree (int port) {
+    public static boolean isPortFree(int port) {
         Server s = new Server();
-        try { s.bind(port); }
-        catch (IOException e) { return false; }
+        try {
+            s.bind(port);
+        } catch (IOException e) {
+            return false;
+        }
 
         s.close();
         return true;
     }
 
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         new MainServer();
 
         CRClient[] clients = new CRClient[MAX_LOBBY];
