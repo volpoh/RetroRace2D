@@ -4,8 +4,6 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-import com.esotericsoftware.kryo.Kryo;
-
 import java.io.IOException;
 
 /**
@@ -41,10 +39,6 @@ public class CRClient {
         this.connect(host, port);
 
         this.port = port;
-
-        Kryo kryo = new Kryo();
-        kryo.register(CRRequest.class);
-        kryo.register(CRResponse.class);
     }
 
     /**
@@ -87,7 +81,7 @@ public class CRClient {
      * @author Marco Marrelli
      * @since 13/05/2022
      */
-    public void send(CRRequest obj) {
+    public void send(String obj) {
         this.client.sendTCP(obj);
     }
 
@@ -100,7 +94,7 @@ public class CRClient {
     public void addListenerToClient() {
         this.client.addListener(new Listener() {
             public void received(Connection connection, Object object) {
-                if (object instanceof CRResponse response) {
+                if (object instanceof String) {
                 }
             }
         });

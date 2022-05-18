@@ -31,5 +31,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.1" level="project" />
     <orderEntry type="library" name="esotericsoftware.kryonet" level="project" />
     <orderEntry type="library" name="esotericsoftware.kryo" level="project" />
+    <orderEntry type="library" name="ow2.asm" level="project" />
   </component>
 </module>

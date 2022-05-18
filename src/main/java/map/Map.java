@@ -40,7 +40,7 @@ public class Map implements Iterable<Chunk> {
     /**
      * The list of the chunks that compose the map.
      */
-    protected final List<Chunk> map;
+    public final List<Chunk> map;
 
     /**
      * The seed that generate this map.

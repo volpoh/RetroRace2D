@@ -128,10 +128,8 @@ public class CRServer {
     public void addListenerToServer(Map map) {
         this.server.addListener(new Listener() {
             public void received(Connection connection, Object object) {
-                if (object instanceof CRRequest request) {
-                    ImplementazioneGrafica GUI = new ImplementazioneGrafica();
-                    GUI.init(map);
-                    ImplementazioneGrafica.main(null);
+                if (object instanceof String) {
+                    ImplementazioneGrafica.main(new String[]{ seed });
                 }
             }
         });

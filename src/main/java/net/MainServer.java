@@ -1,5 +1,6 @@
 package net;
 
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import org.jetbrains.annotations.NotNull;
 
@@ -131,16 +132,8 @@ public class MainServer {
 
         CRClient[] clients = new CRClient[MAX_LOBBY];
 
-        /*
-        for (CRPort port : PORTS){
-            LOBBYLIST[port.ID] = new CRServer(port);
-            clients[port.ID] = new CRClient("localhost", port);
-            clients[port.ID].send("Miao" + port.ID);
-        }
-        */
-
         LOBBY_LIST[0] = new CRServer(PORTS[0]);
         clients[0] = new CRClient("localhost", PORTS[0]);
-        clients[0].send(new CRRequest(0, "miao"));
+        clients[0].send("Miao");
     }
 }
