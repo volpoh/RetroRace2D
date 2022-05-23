@@ -37,8 +37,6 @@ import java.util.List;
 
  * ho aggiornato (messo anche su giT) la mappa con anche al funzione lenght che ho visto che volpo voleva
  tipo getLength()? si per ora ho fatto una cosa bruttissima che funziona, ma non è molto elegante
-
- ma che cazzo???? copilot mi consiglia pure le frasi in italiano [faccina dello scheletro]
  */
 
 
@@ -60,13 +58,18 @@ public class ImplementazioneGrafica extends Application{
      */
     int MAP_HEIGHT;
 
-    final int xDimFinestra=1024;
-    final int yDimFinestra=700;
+    /**
+     * Starting Side of the Map.
+     */
+    char startingPoint;
+
+    final static int xDimFinestra=1024;
+    final static int yDimFinestra=700;
 
     @Override
     public void start(Stage stage) throws IOException {
         generateMap();
-        SpriteCar sprite = new SpriteCar();
+        SpriteCar sprite = new SpriteCar(startingPoint);
         mapBackground mapB = new mapBackground(this.map);
 
         mapB.background.setFitWidth(MAP_WIDTH*4);
@@ -74,15 +77,11 @@ public class ImplementazioneGrafica extends Application{
         mapB.background.setPreserveRatio(true);
 
         mapB.background.setX(0);
-        mapB.background.setY(yDimFinestra -(MAP_HEIGHT*4));
 
         System.out.println(mapB.background.getFitHeight());
-        System.out.println(mapB.background.getFitWidth());
 
         Group root = new Group(mapB.background, sprite.car);
-        Scene scene = new Scene(root,xDimFinestra, yDimFinestra);
-
-
+        Scene scene = new Scene(root, xDimFinestra, yDimFinestra);
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -91,7 +90,7 @@ public class ImplementazioneGrafica extends Application{
 
                 switch (event.getCode()){
                     case W:
-                    case UP: {
+                        /*case UP:*/{
 
                         if (sprite.getPositionY() < 250) {
                             mapB.setVelYB(2);
@@ -103,7 +102,7 @@ public class ImplementazioneGrafica extends Application{
                         break;
                     }
                     case S:
-                    case DOWN:{
+                        /*case DOWN:*/{
                         if (sprite.getPositionY() > 500) {
                             mapB.setVelYB(-2);
                             sprite.setVelY(0);
@@ -115,13 +114,13 @@ public class ImplementazioneGrafica extends Application{
                     }
 
                     case A:
-                    case LEFT:{
+                        /*case LEFT:*/{
                         sprite.setVelX(-2);
                         break;
                     }
 
                     case D:
-                    case RIGHT:{
+                        /*case RIGHT:*/{
                         sprite.setVelX(2);
                         break;
                     }
@@ -129,11 +128,9 @@ public class ImplementazioneGrafica extends Application{
 
                 }
 
-                System.out.println(event.getCode());
-
+                //System.out.println(event.getCode());
             }
         });
-
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -153,8 +150,9 @@ public class ImplementazioneGrafica extends Application{
                 }
             }
         });
-        sprite.atS.start();
+
         mapB.atB.start();
+        sprite.atS.start();
         stage.setTitle("Car Race");
         stage.setScene(scene);
         stage.show();
@@ -198,6 +196,10 @@ public class ImplementazioneGrafica extends Application{
         if(checkShowedMap && checkLayoutMap){
             Collections.reverse(chunkList);
             System.out.println(chunkList);
+
+            startingPoint = chunkList.get(0).charAt(2);
+            System.out.println();
+
             return true;
         }
 
