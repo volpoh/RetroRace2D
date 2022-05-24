@@ -1,5 +1,6 @@
 package com.example.carrace12;
 
+import com.esotericsoftware.kryonet.Server;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -9,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import map.Chunk;
 import map.Map;
+import net.CRClient;
+import net.CRServer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

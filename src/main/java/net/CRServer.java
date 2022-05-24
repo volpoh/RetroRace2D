@@ -1,12 +1,12 @@
 package net;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.*;
 
 import com.example.carrace12.ImplementazioneGrafica;
 import map.Map;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Car Race Lobby Server class.
@@ -22,7 +22,7 @@ public class CRServer {
     /**
      * Server (Kryonet).
      */
-    private final Server server;
+    final Server server;
 
     /**
      * Port of the Server.
@@ -43,6 +43,11 @@ public class CRServer {
      * If the Server is running.
      */
     public boolean isUsed;
+
+    /**
+     * Client List
+     */
+    public List<CRClient> clientList;
 
     /**
      * CRServer Constructor(s).
@@ -127,10 +132,11 @@ public class CRServer {
      */
     public void addListenerToServer(Map map) {
         this.server.addListener(new Listener() {
-            public void received(Connection connection, Object object) {
-                if (object instanceof String) {
-                    ImplementazioneGrafica.main(new String[]{ seed });
-                }
+            public void received(Connection connection, Object object){
+                //if (object instanceof CRRequest) {
+                    ImplementazioneGrafica GUI = new ImplementazioneGrafica();
+                    GUI.main(new String[]{ seed });
+                //}
             }
         });
     }
