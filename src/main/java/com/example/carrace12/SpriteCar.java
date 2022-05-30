@@ -12,7 +12,8 @@ import java.io.InputStream;
 public class SpriteCar {
     private double positionX;
     private double positionY;
-    private int velX = 0, velY=0;
+    double velYDefault = 0.5;
+    private double velX = 0, velY=0;
     AnimationTimer atS;
     ImageView car = new ImageView();
 
@@ -32,10 +33,16 @@ public class SpriteCar {
         atS = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                positionX += velX;
+                if( ((car.getX()+velX)>0) && ((car.getX()+velX) < ImplementazioneGrafica.xDimFinestra-20)){
+                    positionX += velX;
+                }
                 car.setX(positionX);
 
-                positionY += velY;
+                if( (car.getY()+velY)<700){
+                    positionY += velY;
+                }
+
+
                 car.setY(positionY);
             }
         };
@@ -43,17 +50,16 @@ public class SpriteCar {
     }
 
     void inclinazione (){}
-    void setVelX(int speed){
+    void setVelX(double speed){
         velX=speed;
     }
-    void setVelY(int speed){
+    void setVelY(double speed){
         velY=speed;
     }
     double getPositionX(){
         return positionX;
     }
     double getPositionY(){return positionY;}
-
 
 
 /*

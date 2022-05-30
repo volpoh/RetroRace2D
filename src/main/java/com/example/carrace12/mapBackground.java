@@ -18,8 +18,10 @@ public class mapBackground {
     AnimationTimer atB;
     private double yMap;
     private double velY;
+    private double yMapStart;
     public mapBackground(Map map) throws IOException {
         yMap = -(map.length()*CHUNK_WIDTH*4);
+        yMapStart = yMap;
         System.out.println("mapB: " + yMap);
         InputStream stream = new FileInputStream("src/main/resources/map.png");
         Image img = new Image(stream);
@@ -27,7 +29,10 @@ public class mapBackground {
         atB = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                yMap += velY;
+                if((yMap+velY)>=yMapStart && (yMap+velY)<=-720){
+                    yMap += velY;
+                    System.out.println("POSIZIONEEE:"+yMap);
+                }
                 background.setY(yMap + ImplementazioneGrafica.yDimFinestra);
             }
         };
@@ -35,5 +40,11 @@ public class mapBackground {
 
     void setVelYB(int speed){
         velY=speed;
+    }
+    double getYMapStart() {
+        return yMapStart;
+    }
+    double getYMap(){
+        return yMap;
     }
 }

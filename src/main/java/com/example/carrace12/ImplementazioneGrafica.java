@@ -81,22 +81,20 @@ public class ImplementazioneGrafica extends Application{
 
         mapB.background.setX(0);
 
-        System.out.println(mapB.background.getFitHeight());
-
         Group root = new Group(mapB.background, sprite.car);
         Scene scene = new Scene(root, xDimFinestra, yDimFinestra);
+
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                //prova ad usare uno switch per il break
 
                 switch (event.getCode()){
                     case W:
-                        /*case UP:*/{
+                        case UP:{
 
-                        if (sprite.getPositionY() < 250) {
-                            mapB.setVelYB(2);
+                        if (sprite.getPositionY() < 250 && mapB.getYMap()<-720) {
+                            mapB.setVelYB(15);
                             sprite.setVelY(0);
 
                         } else {
@@ -105,8 +103,8 @@ public class ImplementazioneGrafica extends Application{
                         break;
                     }
                     case S:
-                        /*case DOWN:*/{
-                        if (sprite.getPositionY() > 500) {
+                        case DOWN:{
+                        if (sprite.getPositionY() > 500){
                             mapB.setVelYB(-2);
                             sprite.setVelY(0);
 
@@ -117,13 +115,13 @@ public class ImplementazioneGrafica extends Application{
                     }
 
                     case A:
-                        /*case LEFT:*/{
-                        sprite.setVelX(-2);
+                        case LEFT:{
+                            sprite.setVelX(-2);
                         break;
                     }
 
                     case D:
-                        /*case RIGHT:*/{
+                        case RIGHT:{
                         sprite.setVelX(2);
                         break;
                     }
@@ -137,19 +135,30 @@ public class ImplementazioneGrafica extends Application{
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.W){
-                    sprite.setVelY(0);
-                    mapB.setVelYB(0);
-                }
-                if (event.getCode() == KeyCode.S){
-                    sprite.setVelY(0);
-                    mapB.setVelYB(0);
-                }
-                if (event.getCode() == KeyCode.A){
-                    sprite.setVelX(0);
-                }
-                if (event.getCode() == KeyCode.D){
-                    sprite.setVelX(0);
+                switch (event.getCode()){
+                    case W:
+                    case UP:{
+                        sprite.setVelY(-sprite.velYDefault);
+                        mapB.setVelYB(0);
+                        break;
+                    }
+                    case S:
+                    case DOWN:{
+                        sprite.setVelY(0);
+                        mapB.setVelYB(0);
+                    }
+
+                    case A:
+                    case LEFT:{
+                        sprite.setVelX(0);
+                        break;
+                    }
+
+                    case D:
+                    case RIGHT:{
+                        sprite.setVelX(0);
+                        break;
+                    }
                 }
             }
         });
