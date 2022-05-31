@@ -1,15 +1,14 @@
-package com.example.carrace12;
+package gui;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SpriteCar {
+public class GUICar {
     private double positionX;
     private double positionY;
     double velYDefault = 0.5;
@@ -17,11 +16,11 @@ public class SpriteCar {
     AnimationTimer atS;
     ImageView car = new ImageView();
 
-    public SpriteCar(char startingPoint) throws IOException {
+    public GUICar(char startingPoint) throws IOException {
         InputStream stream = new FileInputStream("src/main/resources/car.png");
         Image img = new Image(stream);
         car.setImage(img);
-        if(startingPoint == 'r'){ car.setX(ImplementazioneGrafica.xDimFinestra-200); }
+        if(startingPoint == 'r'){ car.setX(GUI.xDimFinestra-200); }
         else if(startingPoint == 'l'){ car.setX(200); }
         car.setY(600);
         car.setPreserveRatio(true);
@@ -33,7 +32,7 @@ public class SpriteCar {
         atS = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                if( ((car.getX()+velX)>0) && ((car.getX()+velX) < ImplementazioneGrafica.xDimFinestra-20)){
+                if( ((car.getX()+velX)>0) && ((car.getX()+velX) < GUI.xDimFinestra-20)){
                     positionX += velX;
                 }
                 car.setX(positionX);

@@ -1,17 +1,13 @@
-package com.example.carrace12;
+package gui;
 
-import com.esotericsoftware.kryonet.Server;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import map.Chunk;
 import map.Map;
-import net.CRClient;
-import net.CRServer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -45,7 +41,7 @@ import java.util.List;
 
 
 
-public class ImplementazioneGrafica extends Application{
+public class GUI extends Application{
     /**
      * The map.
      */
@@ -72,8 +68,8 @@ public class ImplementazioneGrafica extends Application{
     @Override
     public void start(Stage stage) throws IOException {
         generateMap();
-        SpriteCar sprite = new SpriteCar(startingPoint);
-        mapBackground mapB = new mapBackground(this.map);
+        GUICar sprite = new GUICar(startingPoint);
+        GUIMap mapB = new GUIMap(this.map);
 
         mapB.background.setFitWidth(MAP_WIDTH*4);
         mapB.background.setFitHeight(MAP_HEIGHT*4);

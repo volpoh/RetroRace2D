@@ -1,25 +1,23 @@
-package com.example.carrace12;
+package gui;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import map.Map;
-import map.Chunk;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import static map.Chunk.CHUNK_WIDTH;
 
-public class mapBackground {
+public class GUIMap {
     ImageView background = new ImageView();
     AnimationTimer atB;
     private double yMap;
     private double velY;
     private double yMapStart;
-    public mapBackground(Map map) throws IOException {
+    public GUIMap(Map map) throws IOException {
         yMap = -(map.length()*CHUNK_WIDTH*4);
         yMapStart = yMap;
         System.out.println("mapB: " + yMap);
@@ -33,7 +31,7 @@ public class mapBackground {
                     yMap += velY;
                     System.out.println("POSIZIONEEE:"+yMap);
                 }
-                background.setY(yMap + ImplementazioneGrafica.yDimFinestra);
+                background.setY(yMap + GUI.yDimFinestra);
             }
         };
     }

@@ -1,9 +1,9 @@
-package com.example.carrace12;
+package gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class JFXController {
     @FXML
     private Label welcomeText;
 

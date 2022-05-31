@@ -11,8 +11,8 @@ module com.example.carrace12 {
     requires kryonet;
     requires kryo;
 
-    opens com.example.carrace12 to javafx.fxml;
-    exports com.example.carrace12;
+    opens gui to javafx.fxml;
+    exports gui;
     exports map;
     opens map to javafx.fxml;
 }

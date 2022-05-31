@@ -2,7 +2,7 @@ package net;
 
 import com.esotericsoftware.kryonet.*;
 
-import com.example.carrace12.ImplementazioneGrafica;
+import gui.GUI;
 import map.Map;
 
 import java.io.IOException;
@@ -134,7 +134,7 @@ public class CRServer {
         this.server.addListener(new Listener() {
             public void received(Connection connection, Object object){
                 //if (object instanceof CRRequest) {
-                    ImplementazioneGrafica GUI = new ImplementazioneGrafica();
+                    GUI GUI = new GUI();
                     GUI.main(new String[]{ seed });
                 //}
             }
